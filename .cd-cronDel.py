@@ -4,8 +4,14 @@ pipeline {
     stages {
         stage('Run Python Script') {
             steps {
-                // Replace script.py with your Python file
-                sh 'python3 cronDel.py'
+                withCredentials([
+                string(credentialsId: 'userName', variable: 'username'),
+                string(credentialsId: 'password', variable: 'password')
+                ]) {
+                sh '''
+                python3 cronDel.py --username "$username" --password "$password"
+                '''
+                }
             }
         }
     }
