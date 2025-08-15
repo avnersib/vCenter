@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    parameters {
+    activeChoice choiceType: 'PT_SINGLE_SELECT', filterLength: 1, filterable: false, name: 'list', randomName: 'choice-parameter-81908238869903', script: groovyScript(fallbackScript: [classpath: [], oldScript: '', sandbox: true, script: ''], script: [classpath: [], oldScript: '', sandbox: false, script: '''def command = "python3 /opt/list.py"
+   def proc = command.execute()
+   proc.waitFor()
+
+    if(proc.exitValue() == 0) {
+    def output = proc.in.text.trim().split("\\n")
+    
+
+    if(output[0].startsWith("Found")) {
+        output = output[1..-1] 
+    }
+
+    return output.collect { it.trim() }  
+     } else {
+    return ["ERROR: Could not fetch VMs"]
+	}'''])
+	}
+
+    stages {
+        stage('Run Python Script') {
+            steps {
+                withCredentials([
+                string(credentialsId: 'userName', variable: 'username'),
+                string(credentialsId: 'password', variable: 'password')
+                ]) {
+                sh '''
+                python3 updateTime.py --username "$username" --password "$password" --vmname "${list}"
+                '''
+                }
+            }
+        }
+    }
+}
