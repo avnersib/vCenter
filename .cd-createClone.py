@@ -17,7 +17,7 @@ pipeline {
                 string(credentialsId: 'password', variable: 'password')
                 ]) {
                 sh '''
-                python3 createClone.py --username "$username" --password "$password" --env "${params.ENVIRONMENT}"
+                python3 createClone.py --username "$username" --password "$password" --env "${ENVIRONMENT}"
                 '''
                 }
             }
