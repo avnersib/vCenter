@@ -135,7 +135,7 @@ def assign_tag(client, vm_obj, tag_name, category_name, description):
             name=category_name,
             description=f"{category_name} category",
             cardinality="SINGLE",
-            associable_types={"VirtualMachine"}  # ✅ set במקום list
+            associable_types={"VirtualMachine"}  
         )
         cat_id = category_svc.create(spec)
 
