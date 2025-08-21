@@ -23,7 +23,7 @@ context = ssl._create_unverified_context()
 
 def wait_for_task(task):
     while task.info.state not in [vim.TaskInfo.State.success, vim.TaskInfo.State.error]:
-        pass
+        time.sleep(1)
     if task.info.state == vim.TaskInfo.State.error:
         raise task.info.error
     return task.info.result
