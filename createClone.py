@@ -163,14 +163,14 @@ def assign_tag(client, vm_obj, tag_name, category_name, description):
     print(f"[INFO] Assigned tag '{tag_name}' to VM '{vm_obj.name}'")
 
 
-def assign_tags_for_clone(client, vm_obj, time):
+def assign_tags_for_clone(client, vm_obj, time_):
     """
     Assign both Timestamp and Clone tags to VM.
     """
     timestamp_tag = f"TS_{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    time_in_day = time
+    time_in_day = time_
     assign_tag(client, vm_obj, timestamp_tag, TAG_CATEGORY_TIMESTAMP, "Timestamp tag")
-    assign_tag(client, vm_obj, time_in_day, TAG_CATEGORY_TIMESTAMP, "time_day")
+    assign_tag(client, vm_obj, time_in_day, TAG_TIMESTAMP, "time_day")
     assign_tag(client, vm_obj, "LinkedClone", TAG_CATEGORY_CLONE, "Mark VM as linked clone")
 
 
@@ -185,8 +185,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--username", help="vCenter username")
     parser.add_argument("--password", help="vCenter password")
-    parser.add_argument("--env",      help="name for env")
     parser.add_argument("--time",      help="time to keep machine")
+    parser.add_argument("--env",      help="name for env")
     args = parser.parse_args()
 
     VCENTER_USER = args.username
