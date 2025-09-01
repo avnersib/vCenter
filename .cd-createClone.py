@@ -6,7 +6,8 @@ pipeline {
             name: 'ENVIRONMENT',
             defaultValue: 'dev',
             description: 'Enter the environment'
-        )
+        ),
+        string defaultValue: '24', name: 'time_'
     }
 
     stages {
@@ -17,7 +18,7 @@ pipeline {
                 string(credentialsId: 'password', variable: 'password')
                 ]) {
                 sh '''
-                python3 createClone.py --username "$username" --password "$password" --env "${ENVIRONMENT}"
+                python3 createClone.py --username "$username" --password "$password" --env "${ENVIRONMENT} --time ${time_}"
                 '''
                 }
             }
