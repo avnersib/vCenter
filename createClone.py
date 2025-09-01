@@ -192,6 +192,7 @@ if __name__ == "__main__":
     VCENTER_USER = args.username
     VCENTER_PASSWORD = args.password 
     NEW_VM_NAME = args.env
+    TIME_DAY = args.time
 
 
     if not VCENTER_USER or not VCENTER_PASSWORD:
@@ -231,7 +232,7 @@ if __name__ == "__main__":
         new_vm = get_obj(content, [vim.VirtualMachine], NEW_VM_NAME)
 
         # Assign both Timestamp and Clone tags
-        assign_tags_for_clone(client, new_vm, args.time)
+        assign_tags_for_clone(client, new_vm, TIME_DAY)
 
         # Revert source VM to template if needed
         revert_to_template_if_needed(vm_source, was_template)
