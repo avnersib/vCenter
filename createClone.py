@@ -170,7 +170,7 @@ def assign_tags_for_clone(client, vm_obj, time_):
     timestamp_tag = f"TS_{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     time_in_day = time_
     assign_tag(client, vm_obj, timestamp_tag, TAG_CATEGORY_TIMESTAMP, "Timestamp tag")
-    assign_tag(client, vm_obj, time_in_day, TAG_TIMESTAMP, "time_day")
+    assign_tag(client, vm_obj, time_in_day, "time", "time_day")
     assign_tag(client, vm_obj, "LinkedClone", TAG_CATEGORY_CLONE, "Mark VM as linked clone")
 
 
