@@ -63,6 +63,8 @@ def ensure_vm_with_snapshot(content, source_name, host_name):
         obj = get_obj(content, [vim.VirtualMachine], source_name)
         converted_to_vm = True
         print(f"[INFO] Converted template '{source_name}' to VM.")
+    else:
+        print(f"[INFO] Source '{source_name}' is a regular VM.")   
 
     if not obj.snapshot:
         print(f"[INFO] No snapshot found for '{source_name}', creating one...")
