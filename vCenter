@@ -1,1 +1,57 @@
-vCenter
+from pyVim.connect import SmartConnect, Disconnect
+from pyVmomi import vim
+import ssl
+import atexit
+import requests
+from vmware.vapi.vsphere.client import create_vsphere_client
+import os
+
+VCENTER_HOST = "192.168.2.58"
+VCENTER_PORT = 443
+VCENTER_USER = "xxxxxxxxxxx"
+VCENTER_PASSWORD = "xxxxxx"
+CLONE_TAG_NAME = "LinkedClone"
+
+requests.packages.urllib3.disable_warnings()
+context = ssl._create_unverified_context()
+
+def main():
+    si = SmartConnect(host=VCENTER_HOST, user=VCENTER_USER, pwd=VCENTER_PASSWORD, port=VCENTER_PORT, sslContext=context)
+    atexit.register(Disconnect, si)
+
+    session = requests.session()
+    session.verify = False
+    client = create_vsphere_client(server=VCENTER_HOST, username=VCENTER_USER, password=VCENTER_PASSWORD, session=session)
+
+    tag_svc = client.tagging.Tag
+    assoc_svc = client.tagging.TagAssociation
+
+    clone_tag_id = None
+    for t_id in tag_svc.list():
+        t_info = tag_svc.get(t_id)
+        if t_info.name == CLONE_TAG_NAME:
+            clone_tag_id = t_id
+            break
+    if not clone_tag_id:
+        print("No LinkedClone tag found.")
+        return
+
+    vm_ids = assoc_svc.list_attached_objects(clone_tag_id)
+    print(f"Found {len(vm_ids)} VMs with LinkedClone tag:")
+
+    content = si.RetrieveContent()
+    container = content.viewManager.CreateContainerView(content.rootFolder, [vim.VirtualMachine], True)
+    for vm_ref in vm_ids:
+        vm_obj = None
+        for vm in container.view:
+            if vm._moId == vm_ref.id:
+                vm_obj = vm
+                break
+        if vm_obj:
+            print(vm_obj.name)
+        else:
+            print(f"VM with MoID {vm_ref.id} not found")
+    container.Destroy()
+
+if __name__ == "__main__":
+    main()
