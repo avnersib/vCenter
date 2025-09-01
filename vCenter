@@ -55,3 +55,40 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+#######################
+
+from pyVim.connect import SmartConnect, Disconnect
+from pyVmomi import vim
+import ssl, atexit
+
+VCENTER_HOST = "192.168.2.58"
+VCENTER_USER = "xxxxxx"
+VCENTER_PASSWORD = "xxxxx"
+VCENTER_PORT = 443
+
+context = ssl._create_unverified_context()
+
+si = SmartConnect(host=VCENTER_HOST, user=VCENTER_USER, pwd=VCENTER_PASSWORD, port=VCENTER_PORT, sslContext=context)
+atexit.register(Disconnect, si)
+
+content = si.RetrieveContent()
+
+def print_names(vimtype):
+    container = content.viewManager.CreateContainerView(content.rootFolder, [vimtype], True)
+    for obj in container.view:
+        print(obj.name)
+    container.Destroy()
+
+print("Clusters:")
+print_names(vim.ClusterComputeResource)
+
+print("\nHosts:")
+print_names(vim.HostSystem)
+
+print("\nDatastores:")
+print_names(vim.Datastore)
+
+print("\nFolders:")
+print_names(vim.Folder)
