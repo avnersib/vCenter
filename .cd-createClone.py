@@ -6,7 +6,7 @@ pipeline {
             name: 'ENVIRONMENT',
             defaultValue: 'dev',
             description: 'Enter the environment'
-        ),
+        )
         string defaultValue: '24', name: 'time_'
     }
 
