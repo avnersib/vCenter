@@ -6,7 +6,7 @@ import requests
 from vmware.vapi.vsphere.client import create_vsphere_client
 import os
 
-
+impart test 
 
 VCENTER_HOST = "192.168.2.58"
 VCENTER_PORT = 443
