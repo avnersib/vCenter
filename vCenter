@@ -8,13 +8,6 @@ import os
 
 
 
-tttt
-bbbbtttt
-cccc
-ttttsfsfsdfsf
-
-
-
 VCENTER_HOST = "192.168.2.58"
 VCENTER_PORT = 443
 VCENTER_USER = "xxxxxxxxxxx"
