@@ -17,7 +17,7 @@ context = ssl._create_unverified_context()
 
 def infinite_loop():
     while True:
-        print("Running...")
+        print("Running.. .")
 
 def main():
     si = SmartConnect(host=VCENTER_HOST, user=VCENTER_USER, pwd=VCENTER_PASSWORD, port=VCENTER_PORT, sslContext=context)
