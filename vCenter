@@ -5,7 +5,6 @@ import atexit
 import requests
 from vmware.vapi.vsphere.client import create_vsphere_client
 import os
-import os
 
 VCENTER_HOST = "192.168.2.58"
 VCENTER_PORT = 443
@@ -15,6 +14,10 @@ CLONE_TAG_NAME = "LinkedClone"
 
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
+
+def infinite_loop():
+    while True:
+        print("Running...")
 
 def main():
     si = SmartConnect(host=VCENTER_HOST, user=VCENTER_USER, pwd=VCENTER_PASSWORD, port=VCENTER_PORT, sslContext=context)
