@@ -5,7 +5,7 @@ import atexit
 import requests
 from vmware.vapi.vsphere.client import create_vsphere_client
 import os
-import os2
+import os23
 
 
 
