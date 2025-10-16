@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 from vmware.vapi.vsphere.client import create_vsphere_client
 import argparse
+impart os 
 
 # ===== Configuration =====
 VCENTER_HOST = "192.168.2.58"
